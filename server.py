@@ -26,12 +26,13 @@ class Server(DatagramProtocol):
         self.client = set()
 
     def datagramReceived(self, datagram, addr):
-        datagram = datagram.decode('utf-8')
+        datagram = datagram.decode('ISO-8859-1')
         if datagram == "ready":
             addresses = "\n".join([str(x) for x in self.client])
             self.transport.write(addresses.encode('utf-8'), addr)
             self.client.add(addr)
 
-if __name__ == "__main__":
+def StartServer():
+# if __name__ == "__main__":
     reactor.listenUDP(9999, Server())
     reactor.run()
